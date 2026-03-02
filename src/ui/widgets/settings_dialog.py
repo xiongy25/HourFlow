@@ -101,7 +101,7 @@ class SettingsDialog(QDialog):
         # 透明度滑块
         opacity_layout = QHBoxLayout()
         self._opacity_slider = QSlider(Qt.Horizontal)
-        self._opacity_slider.setRange(10, 100)  # 10%-100%
+        self._opacity_slider.setRange(0, 100)  # 0%-100%，0%为完全透明
         self._opacity_slider.setTickPosition(QSlider.TicksBelow)
         self._opacity_slider.setTickInterval(10)
         self._opacity_label = QLabel("100%")

@@ -117,8 +117,8 @@ class TimeVizWidget(QWidget):
         bg_color = QColor("#E5E7EB")
         painter.setPen(QPen(bg_color, pen_width))
         painter.setBrush(Qt.NoBrush)
-        painter.drawEllipse(center_x - radius, center_y - radius,
-                          radius * 2, radius * 2)
+        rect = center_x - radius, center_y - radius, radius * 2, radius * 2
+        painter.drawEllipse(*rect)
 
         # 绘制进度圆环
         if self._progress > 0:
@@ -129,14 +129,11 @@ class TimeVizWidget(QWidget):
             angle = int(360 * self._progress / 100)
 
             # 绘制弧形
-            painter.drawArc(
-                center_x - radius,
-                center_y - radius,
-                radius * 2,
-                radius * 2,
-                90 * 16,
-                -angle * 16
-            )
+            arc_rect = (center_x - radius, center_y - radius,
+                       radius * 2, radius * 2)
+            start_angle = 90 * 16
+            span_angle = -angle * 16
+            painter.drawArc(*arc_rect, start_angle, span_angle)
 
     def get_progress(self) -> float:
         """获取当前进度"""

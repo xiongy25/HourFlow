@@ -42,7 +42,7 @@ class ConfigManager:
         "notification_duration": 3000,  # 毫秒
 
         # 窗口透明度设置
-        "window_opacity": 1.0,  # 0.0-1.0，1.0为不透明
+        "window_opacity": 1.0,  # 0.0-1.0，0.0为完全透明，1.0为不透明
     }
 
     def __new__(cls):
@@ -147,7 +147,7 @@ class ConfigManager:
 
     def set_window_opacity(self, opacity: float):
         """设置窗口透明度"""
-        self.set("window_opacity", max(0.1, min(1.0, opacity)))
+        self.set("window_opacity", max(0.0, min(1.0, opacity)))
 
     def get_all(self) -> Dict[str, Any]:
         """获取所有配置"""

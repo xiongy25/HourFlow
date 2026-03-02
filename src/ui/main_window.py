@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (
     QSystemTrayIcon, QMenu, QLabel, QMessageBox,
     QPushButton, QFrame, QScrollArea, QTabWidget
 )
-from PySide6.QtCore import Qt, Signal, QTimer
+from PySide6.QtCore import Signal, QTimer, Qt
 from PySide6.QtGui import QAction, QCloseEvent, QPixmap, QPainter, QColor, QIcon
 
 from src.ui.widgets.countdown_widget import CountdownWidget
@@ -279,7 +279,18 @@ class MainWindow(QMainWindow):
     def _apply_opacity(self):
         """应用窗口透明度设置"""
         opacity = self._config.get_window_opacity()
-        self.setWindowOpacity(opacity)
+        
+        if opacity == 0:
+            # 窗口完全透明，但内容保持可见
+            # 使用WA_TranslucentBackground使窗口背景透明
+            self.setAttribute(Qt.WA_TranslucentBackground)
+            # 设置窗口背景为透明，但子组件保持原色
+            self.setStyleSheet("QMainWindow { background: transparent; }")
+        else:
+            # 恢复默认设置
+            self.setAttribute(Qt.WA_TranslucentBackground, False)
+            self.setStyleSheet("")
+            self.setWindowOpacity(opacity)
 
     def _show_about(self):
         """显示关于对话框"""
